@@ -1,5 +1,5 @@
 
-let searchInput = document.getElementById("city");
+let searchInput = document.getElementById("searched-city");
 let searchBtn = document.getElementById("search-btn");
 let searchedCity;
 let weatherApiKey = `82df0740eeb678f44927e8e2dcec03df`;
@@ -33,28 +33,62 @@ const searchResults = function (res) {
 
   let city = res.city.name;
 
-  for (let i = 0; i < 5; i++) {
+  let resultsElObj = {
+    resultsListOne: document.getElementById("results-list-1"),
+    resultsListTwo: document.getElementById("results-list-2"),
+    resultsListThree: document.getElementById("results-list-3"),
+    resultsListFour: document.getElementById("results-list-4"),
+    resultsListFive: document.getElementById("results-list-5"),
+  };
+
+  let imageElObj = {
+    imageOne: document.getElementById("icon-image-1"),
+    imageTwo: document.getElementById("icon-image-2"),
+    imageThree: document.getElementById("icon-image-3"),
+    imageFour: document.getElementById("icon-image-4"),
+    imageFive: document.getElementById("icon-image-5"),
+  }
+
+  Object.values(resultsElObj).forEach((el, i) => {
     let date = res.list[i].dt_txt;
-    let iconNumber = res.list[i].weather[0].icon;
     let temperature = res.list[i].main.temp;
     let humidity = res.list[i].main.humidity;
     let windSpeed = res.list[i].wind.speed;
 
-    console.log(date)
-    console.log(iconNumber)
-    console.log(temperature)
-    console.log(humidity)
-    console.log(windSpeed)
-  }
+  
+    let datelistEl = document.createElement("li");
+    datelistEl.innerText = `Date: ${date}`;
+
+    let temperatureEl = document.createElement("li");
+    temperatureEl.innerText = `Temp: ${temperature}`;
+
+    let humidityEl = document.createElement("li");
+    humidityEl.innerText = `humidity: ${humidity}`;
+
+    let windSpeedEl = document.createElement("li");
+    windSpeedEl.innerText = `windSpeed: ${windSpeed}`;
+
+    el.appendChild(datelistEl);
+    datelistEl.appendChild(temperatureEl);
+    temperatureEl.appendChild(humidityEl);
+    humidityEl.appendChild(windSpeedEl);
+  });
 
 
-  // for (let i = 0; i < 5; i++) {
-  //     console.log(res.list[i])
+  Object.values(imageElObj).forEach((el, i) => {
 
-  //     let searchResultEl = document.createElement("p")
+    let iconNumber = res.list[i].weather[0].icon;
+    el.setAttribute("src", `http://openweathermap.org/img/w/${iconNumber}.png`)
+  })
+};
 
-  //     searchResultEl.innerText = res.list[i].main.temp
-
-  //     searchResultParentEl.appendChild(searchResultEl)
-  // }
+const getIconImage = function (iconNumber) {
+  $.ajax({
+    url: `http://openweathermap.org/img/w/${iconNumber}.png`,
+    type: "GET",
+    dataType: "json",
+    success: function (res) {
+      return res
+    },
+  });
 };

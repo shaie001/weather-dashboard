@@ -1,1 +1,1 @@
-This weather dashboard was developed by retrieving data from another API. This weather dashboard will run in the browser and update HTML and CSS. I've retireved weather data from other cities from the OpenWeather API. 
+This weather dashboard was developed by retrieving data from another API. This weather dashboard will run in the browser and update HTML and CSS. I've retireved weather data from other cities from the OpenWeather API.
